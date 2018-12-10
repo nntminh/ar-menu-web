@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Trang chủ - AR Menu</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+
+  <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCL6AJVue-xzCgoEglsq6AqIaQ6wa7ckGU",
+      authDomain: "ar-menu-lvtn.firebaseapp.com",
+      databaseURL: "https://ar-menu-lvtn.firebaseio.com",
+      projectId: "ar-menu-lvtn",
+      storageBucket: "ar-menu-lvtn.appspot.com",
+      messagingSenderId: "268182650410"
+    };
+    firebase.initializeApp(config);
+
+    // Initialize Cloud Firestore through Firebase
+    var db = firebase.firestore();
+
+    // Disable deprecated features
+    db.settings({
+      timestampsInSnapshots: true
+    });
+
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    
+    function checkCookie() {
+      var userid =getCookie("uid");
+      if (userid != "") {
+        // Get values
+        var usersRef = db.collection("users");
+        usersRef.where("user_id", "==", userid).get().then(function(querySnapshot) {
+              querySnapshot.forEach(function(doc) {
+                  // doc.data() is never undefined for query doc snapshots
+                  let username = doc.data()["user_name"];
+                  let useremail = doc.data()["user_email"];
+                  
+                  let pname = document.getElementById("p-name");
+                  pname.innerHTML = username;
+                  let pemail = document.getElementById("p-email");
+                  pname.innerHTML = useremail;
+                  let imgavatar = document.getElementById("img-avatar");
+
+              });
+        });
+      } else {
+        window.location.href = "signin.html";
+      }
+    }
+
+    function signout() {
+      // Delete cookie
+      M.toast({html: 'Đã đăng xuất!'});
+      document.cookie = "uid" +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+
+    checkCookie();
+  </script>
+</head>
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">Trang chủ</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="index.html">Trang Chủ</a></li>
+        <li><a href="menu.html">Thực Đơn</a></li>
+        <li><a href="favorite.html">Yêu Thích</a></li>
+        <li><a href="guideline.htm">Hướng Dẫn</a></li>
+        <li><a href="signin.html" onclick="signout()">Đăng Xuất</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><div class="user-view">
+          <div class="background">
+            <img src="images/office.jpg">
+          </div>
+          <a href="#user"><img id="img-avatar" class="circle" src="images/user.jpg"></a>
+          <a href="#name"><span class="white-text name"><p id="p-name">A</p></span></a>
+          <a href="#email"><span class="white-text email"><p id="p-email"></p></span></a>
+        </div></li>
+        <li><a href="index.html"><i class="material-icons">home</i>Trang Chủ</a></li>
+        <li><a href="menu.html"><i class="material-icons">local_dining</i>Thực Đơn</a></li>
+        <li><a href="favorite.html"><i class="material-icons">grade</i>Yêu Thích</a></li>
+        <li><a href="guideline.html"><i class="material-icons">help</i>Hướng Dẫn Sử Dụng</a></li>
+
+        <li><div class="divider"></div></li>
+        <li><a href="signin.html" onclick="signout()"><i class="material-icons">not_interested</i>Đăng Xuất</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">Món Ăn Ảo</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">Trải Nghiệm Thực Tế Tăng Cường</h5>
+        </div>
+        <div class="row center">
+          <a href="menu.html" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Chọn Món</a>
+        </div>
+        <br><br>
+
+      </div>
+    </div>
+    <div class="parallax"><img src="images/background1.jpg" alt="Unsplashed background img 1"></div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
+            <h5 class="center">NHANH CHÓNG</h5>
+
+            <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">THIẾT THỰC</h5>
+
+            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
+            <h5 class="center">TẬN TÌNH</h5>
+
+            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">Cùng trải nghiệm để có cái nhìn chính xác nhất.</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="images/background2.jpg" alt="Unsplashed background img 2"></div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <div class="row">
+        <div class="col s12 center">
+          <h3><i class="mdi-content-send brown-text"></i></h3>
+          <h4>Liên Hệ</h4>
+          <p class="left-align light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text"></h5>
+          <p class="grey-text text-lighten-4"></p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text"></h5>
+          <ul>
+            <li><a class="white-text" href="#!"></a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text"></h5>
+          <ul>
+            <li><a class="white-text" href="#!"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">NNTM</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  </body>
+</html>

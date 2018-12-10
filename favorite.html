@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Thực đơn - AR Menu</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+
+  <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCL6AJVue-xzCgoEglsq6AqIaQ6wa7ckGU",
+      authDomain: "ar-menu-lvtn.firebaseapp.com",
+      databaseURL: "https://ar-menu-lvtn.firebaseio.com",
+      projectId: "ar-menu-lvtn",
+      storageBucket: "ar-menu-lvtn.appspot.com",
+      messagingSenderId: "268182650410"
+    };
+    firebase.initializeApp(config);
+
+    // Initialize Cloud Firestore through Firebase
+    var db = firebase.firestore();
+
+    // Disable deprecated features
+    db.settings({
+      timestampsInSnapshots: true
+    });
+
+    // Create a reference to the cities collection
+    var categoriesRef = db.collection("categories");
+    var objectsRef = db.collection("objects");
+    var favoritesRef = db.collection("favorites");
+
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    
+    function checkCookie() {
+      var userid =getCookie("uid");
+      if (userid != "") {
+        // Get values
+        var usersRef = db.collection("users");
+        usersRef.where("user_id", "==", userid).get().then(function(querySnapshot) {
+              querySnapshot.forEach(function(doc) {
+                  // doc.data() is never undefined for query doc snapshots
+                  let username = doc.data()["user_name"];
+                  let useremail = doc.data()["user_email"];
+                  
+                  let pname = document.getElementById("p-name");
+                  pname.innerHTML = username;
+                  let pemail = document.getElementById("p-email");
+                  pname.innerHTML = useremail;
+                  let imgavatar = document.getElementById("img-avatar");
+
+              });
+        });
+      } else {
+        window.location.href = "signin.html";
+      }
+    }
+
+    function signout() {
+      // Delete cookie
+      M.toast({html: 'Đã đăng xuất!'});
+      document.cookie = "uid" +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+
+    checkCookie();
+
+    function addCard(categoryId, d, n, p, id) {
+
+      var container = document.getElementById(categoryId);
+      container.innerHTML += "<div class='col s12 m4'><div class='card'><div class='card-image'><img src='" + p + "'><span class='card-title'>" + n + "</span><a onClick='removeFavorite(\""+id+"\")' class='btn-floating halfway-fab waves-effect waves-light red'><i class='material-icons'>remove</i></a></div><div class='card-content'><p>" + d + "</p><p><a href='detail.html?" + id + "'>Xem chi tiết</a></p></div><div class='card-action'><a href='ar.html?" + id + "'>Trải nghiệm AR</a></div></div></div>"         
+    }
+
+    function fetchObjectsBy(oId) {
+      objectsRef.where("object_id", "==", oId).get().then(function(querySnapshot) {
+              querySnapshot.forEach(function(doc) {
+                  // doc.data() is never undefined for query doc snapshots
+                  let object_des = doc.data()["object_des"];
+                  let object_name = doc.data()["object_name"];
+                  let object_path = doc.data()["object_path"];
+                  let object_id = doc.data()["object_id"];
+                  addCard("test-swipe-0", object_des, object_name, object_path, object_id);
+              });
+      });
+    }
+
+    function removeFavorite(objectId) {
+      // Add a new document in collection
+      let userId = getCookie("uid");
+      let docId = userId + "_" + objectId;
+      favoritesRef.doc(docId).delete().then(function() {
+          M.toast({html: 'Đã xóa khỏi danh sách yêu thích'});
+          location.reload();
+      }).catch(function(error) {
+        M.toast({html: 'Lỗi khi xóa'});
+      });
+    }
+  </script>
+
+</head>
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">Yêu Thích</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="index.html">Trang Chủ</a></li>
+        <li><a href="menu.html">Thực Đơn</a></li>
+        <li><a href="favorite.html">Yêu Thích</a></li>
+        <li><a href="guideline.html">Hướng Dẫn</a></li>
+        <li><a href="signin.html" onclick="signout()">Đăng Xuất</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><div class="user-view">
+          <div class="background">
+            <img src="images/office.jpg">
+          </div>
+          <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+          <a href="#name"><span class="white-text name">Minh Nguyen</span></a>
+          <a href="#email"><span class="white-text email">nntminh16@gmail.com</span></a>
+        </div></li>
+        <li><a href="index.html"><i class="material-icons">home</i>Trang Chủ</a></li>
+        <li><a href="menu.html"><i class="material-icons">local_dining</i>Thực Đơn</a></li>
+        <li><a href="favorite.html"><i class="material-icons">grade</i>Yêu Thích</a></li>
+        <li><a href="guideline.html"><i class="material-icons">help</i>Hướng Dẫn Sử Dụng</a></li>
+
+        <li><div class="divider"></div></li>
+        <li><a href="signin.html" onclick="signout()"><i class="material-icons">not_interested</i>Đăng Xuất</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+      </div>
+    </div>
+    <div class="parallax"><img src="images/background2.jpg" alt="Unsplashed background img 1"></div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+         <div class = "row">
+          <ul id="tabs-swipe-demo" class="tabs">
+              <li class = "tab col s3"><a href="#test-swipe-0">Danh sách</a></li>
+              <div id="div-li"></div>
+            </ul>
+         </div>
+
+        <div id="test-swipe-0" class="row col s12"><p id="message-empty">Danh sách trống</p></div>
+
+        <script type="text/javascript">
+                // Get all values
+                let user_id = "";
+                favoritesRef.get().then(function(querySnapshot) {
+                      querySnapshot.forEach(function(doc) {
+                          // doc.data() is never undefined for query doc snapshots
+                          var element = document.getElementById("message-empty");
+                          element.innerHTML = "";
+                          let object_id = doc.data()["object_id"];
+                          fetchObjectsBy(object_id);
+                      });
+                });
+                  
+        </script>
+
+      </div> 
+    </div>
+  </div>
+
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text"></h5>
+          <p class="grey-text text-lighten-4"></p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text"></h5>
+          <ul>
+            <li><a class="white-text" href="#!"></a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text"></h5>
+          <ul>
+            <li><a class="white-text" href="#!"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">NNTM</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  </body>
+</html>
