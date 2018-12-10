@@ -70,8 +70,7 @@
                   let pname = document.getElementById("p-name");
                   pname.innerHTML = username;
                   let pemail = document.getElementById("p-email");
-                  pname.innerHTML = useremail;
-                  let imgavatar = document.getElementById("img-avatar");
+                  pemail.innerHTML = useremail;
 
               });
         });
@@ -153,6 +152,7 @@
         <li><a href="menu.html">Thực Đơn</a></li>
         <li><a href="favorite.html">Yêu Thích</a></li>
         <li><a href="guideline.html">Hướng Dẫn</a></li>
+        <li><a href="profile.html">Tài Khoản</a></li>
         <li><a href="signin.html" onclick="signout()">Đăng Xuất</a></li>
       </ul>
 
@@ -161,14 +161,14 @@
           <div class="background">
             <img src="images/office.jpg">
           </div>
-          <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
-          <a href="#name"><span class="white-text name">Minh Nguyen</span></a>
-          <a href="#email"><span class="white-text email">nntminh16@gmail.com</span></a>
+          <a href="#name"><span class="white-text name"><p id="p-name"></p>M</span></a>
+          <a href="#email"><span class="white-text email"><p id="p-email"></p></span></a>
         </div></li>
         <li><a href="index.html"><i class="material-icons">home</i>Trang Chủ</a></li>
         <li><a href="menu.html"><i class="material-icons">local_dining</i>Thực Đơn</a></li>
         <li><a href="favorite.html"><i class="material-icons">grade</i>Yêu Thích</a></li>
         <li><a href="guideline.html"><i class="material-icons">help</i>Hướng Dẫn Sử Dụng</a></li>
+        <li><a href="profile.html"><i class="material-icons">user</i>Tài Khoản</a></li>
 
         <li><div class="divider"></div></li>
         <li><a href="signin.html" onclick="signout()"><i class="material-icons">not_interested</i>Đăng Xuất</a></li>

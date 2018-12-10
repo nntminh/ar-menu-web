@@ -67,7 +67,7 @@
 					</div>
 
 					<div class="container-login100-form-btn m-t-17">
-						<a id="a-sign-in" class="login100-form-btn" href="#">Dang Nhap</a>
+						<a id="a-sign-in" class="login100-form-btn" href="#">Đăng Nhập</a>
 					</div>
 					
 					<div class="w-full text-center p-t-55">
@@ -165,7 +165,7 @@
     		let pn = "+84" + document.getElementById("ip-phonenumber").value.slice(1);
 			let pw = document.getElementById("ip-password").value;
 			if ( pn && pw ) {
-				showPopup("Dang kiem tra");
+				showPopup("Đang kiểm tra");
 				
 				usersRef.where("user_id", "==", pn).where("user_password", "==", pw)
 					.get()
@@ -187,7 +187,7 @@
 						}
 					);
 			} else {
-				showPopup("Vui long nhap day du thong tin");
+				showPopup("Vui lòng nhập đầy đủ thông tin");
 			}
 		}
 		

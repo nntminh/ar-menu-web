@@ -65,8 +65,7 @@
                   let pname = document.getElementById("p-name");
                   pname.innerHTML = username;
                   let pemail = document.getElementById("p-email");
-                  pname.innerHTML = useremail;
-                  let imgavatar = document.getElementById("img-avatar");
+                  pemail.innerHTML = useremail;
 
               });
         });
@@ -102,12 +101,14 @@
           <div class="background">
             <img src="images/office.jpg">
           </div>
+          <a href="#name"><span class="white-text name"><p id="p-name"></p>M</span></a>
           <a href="profile.html"><span class="white-text email"><p id="p-email"></p></span></a>
         </div></li>
         <li><a href="index.html"><i class="material-icons">home</i>Trang Chủ</a></li>
         <li><a href="menu.html"><i class="material-icons">local_dining</i>Thực Đơn</a></li>
         <li><a href="favorite.html"><i class="material-icons">grade</i>Yêu Thích</a></li>
         <li><a href="guideline.html"><i class="material-icons">help</i>Hướng Dẫn Sử Dụng</a></li>
+        <li><a href="profile.html"><i class="material-icons">user</i>Tài Khoản</a></li>
 
         <li><div class="divider"></div></li>
         <li><a href="signin.html" onclick="signout()"><i class="material-icons">not_interested</i>Đăng Xuất</a></li>
