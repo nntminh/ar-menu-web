@@ -1,5 +1,5 @@
-const MODEL_OBJ_URL = '../assets/Pasta/Pasta.obj';
-const MODEL_MTL_URL = '../assets/Pasta/Pasta.mtl';
+const MODEL_OBJ_URL = '../models/Pasta/Pasta.obj';
+const MODEL_MTL_URL = '../models/Pasta/Pasta.mtl';
 const MODEL_SCALE = 0.1;
 
 /**

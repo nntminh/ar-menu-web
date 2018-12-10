@@ -1,5 +1,5 @@
-const MODEL_OBJ_URL = '../assets/Hamburger/Hamburger.obj';
-const MODEL_MTL_URL = '../assets/Hamburger/Hamburger.mtl';
+const MODEL_OBJ_URL = '../models/Hamburger/Hamburger.obj';
+const MODEL_MTL_URL = '../models/Hamburger/Hamburger.mtl';
 const MODEL_SCALE = 0.1;
 
 /**
