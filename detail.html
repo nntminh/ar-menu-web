@@ -242,14 +242,7 @@ scene.add(dirLight);
 var ambLight = new THREE.AmbientLight( 0x202020 ); // soft white light
 scene.add( ambLight );
 
-ambient = new THREE.AmbientLight(0xffffff, 1.0);
-            scene.add(ambient);
 
-            keyLight = new THREE.DirectionalLight(new THREE.Color('hsl(30, 100%, 75%)'), 1.0);
-            keyLight.position.set(-100, 0, 100);
-
-            fillLight = new THREE.DirectionalLight(new THREE.Color('hsl(240, 100%, 75%)'), 0.75);
-            fillLight.position.set(100, 0, 100);
 
 //loader for the material
 let mtl_url = "models/" + objectId + "/" + objectId + ".mtl";
