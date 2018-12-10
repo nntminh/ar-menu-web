@@ -12,41 +12,9 @@
       // Get value from href
     let href = window.location.href;
     let objectId = href.substr(href.indexOf("?") + 1, href.lengh);
-
+    window.location.href = "ar/" + objectIdob + ".html" ;
     </script>
   </head>
   <body>
-    <div id="enter-ar-info" class="demo-card mdl-card mdl-shadow--4dp">
-      <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">Trải nghiệm thực tế tăng cường trên thiết bị hỗ trợ thông minh.</h2>
-      </div>
-      <div class="mdl-card__supporting-text">
-
-      </div>
-      <div class="mdl-card__actions mdl-card--border">
-        <a id="enter-ar" class="mdl-button mdl-button--raised mdl-button--accent">
-          Nhấn để trải nghiệm.
-        </a>
-      </div>
-    </div>
-    <div id="unsupported-info" class="demo-card mdl-card mdl-shadow--4dp">
-      <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">Xin lỗi</h2>
-      </div>
-      <div class="mdl-card__supporting-text">
-          Trình duyệt của bạn chưa hỗ trợ WebXR Device API. <a href="menu.html">Quay lại.</a>
-      </div>
-    </div>
-    <div id="stabilization"></div>
-    <div id="info">
-        <span>
-            <a href="menu.html">Thoát</a>
-        </span><br />
-    </div>
-    <script src="js/three.js"></script>
-    <script src="js/OBJLoader.js"></script>
-    <script src="js/MTLLoader.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/ar.js"></script>
   </body>
 </html>
